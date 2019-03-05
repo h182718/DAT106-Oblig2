@@ -14,7 +14,7 @@ public class TemperatureDevice {
 		Client client = new Client("TempDevice", Common.BROKERHOST, Common.BROKERPORT);
 		client.connect();
 
-		for(int x = 1; x < COUNT; x++) {
+		for(int x = 0; x < COUNT; x++) {
 		    try {
 		        Thread.sleep(300);
 

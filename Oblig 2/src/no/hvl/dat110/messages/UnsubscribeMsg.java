@@ -2,9 +2,9 @@ package no.hvl.dat110.messages;
 
 public class UnsubscribeMsg extends Message {
 
-	// TODO: 
-	// Implement objectvariables, constructor, get/set-methods, and toString method
-	private String topicName;
+    // TODO:
+    // Implement objectvariables, constructor, get/set-methods, and toString method
+    private String topicName;
 
     public UnsubscribeMsg(String user, String topicName) {
         super(MessageType.UNSUBSCRIBE, user);

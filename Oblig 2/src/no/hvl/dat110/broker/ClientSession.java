@@ -6,45 +6,45 @@ import no.hvl.dat110.messagetransport.Connection;
 
 public class ClientSession {
 
-	private String user;
-	private Connection connection;
+    private String user;
+    private Connection connection;
 
-	public ClientSession(String user, Connection connection) {
-		this.user = user;
-		this.connection = connection;
+    public ClientSession(String user, Connection connection) {
+        this.user = user;
+        this.connection = connection;
 
-	}
+    }
 
-	public void disconnect() {
+    public void disconnect() {
 
-		if (connection != null) {
-			connection.close();
-		}
-	}
+        if (connection != null) {
+            connection.close();
+        }
+    }
 
-	public String getUser() {
-		return user;
-	}
+    public String getUser() {
+        return user;
+    }
 
-	public void setUser(String user) {
-		this.user = user;
-	}
-	
-	public void send(Message message) {
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-		MessageUtils.send(connection, message);
-	}
+    public void send(Message message) {
 
-	public boolean hasData() {
+        MessageUtils.send(connection, message);
+    }
 
-		return connection.hasData();
-	}
+    public boolean hasData() {
 
-	public Message receive() {
+        return connection.hasData();
+    }
 
-		Message msg = MessageUtils.receive(connection);
+    public Message receive() {
 
-		return msg;
-	}
+        Message msg = MessageUtils.receive(connection);
+
+        return msg;
+    }
 
 }

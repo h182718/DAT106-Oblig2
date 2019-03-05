@@ -1,21 +1,24 @@
 package no.hvl.dat110.broker;
 
+import no.hvl.dat110.messages.Message;
+import no.hvl.dat110.messagetransport.Connection;
+
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import no.hvl.dat110.common.Logger;
-import no.hvl.dat110.messagetransport.Connection;
-
 public class Storage {
 
 	protected ConcurrentHashMap<String, Set<String>> subscriptions;
 	protected ConcurrentHashMap<String, ClientSession> clients;
+	protected ConcurrentHashMap<String, ArrayDeque<Message>> messages;
 
 	public Storage() {
-		subscriptions = new ConcurrentHashMap<String, Set<String>>();
-		clients = new ConcurrentHashMap<String, ClientSession>();
+		subscriptions = new ConcurrentHashMap<>();
+		clients = new ConcurrentHashMap<>();
+		messages = new ConcurrentHashMap<>();
 	}
 
 	public Collection<ClientSession> getSessions() {
@@ -40,6 +43,26 @@ public class Storage {
 		return (subscriptions.get(topic));
 
 	}
+	public ArrayDeque<Message> getMessageQueue(String user) {
+
+		return messages.getOrDefault(user, new ArrayDeque<>());
+
+	}
+
+	public void queueMessage(String user, Message message) {
+		messages.putIfAbsent(user, new ArrayDeque<>());
+		messages.get(user).add(message);
+	}
+
+	public void clearMessageQueue(String user) {
+		messages.remove(user);
+	}
+
+
+	public ClientSession hasSession(String user) {
+		return clients.get(user);
+	}
+
 
 	public void addClientSession(String user, Connection connection) {
 
