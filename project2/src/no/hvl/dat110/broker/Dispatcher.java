@@ -86,7 +86,7 @@ public class Dispatcher extends Stopable {
 
 		String user = msg.getUser();
 
-		Logger.log("onConnect:" + msg.toString());
+		 Logger.log("onConnect:" + msg.toString());
 
 		storage.addClientSession(user, connection);
 
@@ -97,58 +97,38 @@ public class Dispatcher extends Stopable {
 
 		String user = msg.getUser();
 
-		Logger.log("onDisconnect:" + msg.toString());
+		 Logger.log("onDisconnect:" + msg.toString());
 
 		storage.removeClientSession(user);
 
 	}
 
 	public void onCreateTopic(CreateTopicMsg msg) {
-
-		Logger.log("onCreateTopic:" + msg.toString());
-
-		// TODO: create the topic in the broker storage 
-		
-		throw new RuntimeException("not yet implemented");
+		 Logger.log("onCreateTopic:" + msg.toString());
+		storage.createTopic(msg.getTopicName());
 
 	}
 
 	public void onDeleteTopic(DeleteTopicMsg msg) {
-
-		Logger.log("onDeleteTopic:" + msg.toString());
-
-		// TODO: delete the topic from the broker storage
-		
-		throw new RuntimeException("not yet implemented");
+		 Logger.log("onDeleteTopic:" + msg.toString());
+		storage.deleteTopic(msg.getTopicName());
 	}
 
 	public void onSubscribe(SubscribeMsg msg) {
-
-		Logger.log("onSubscribe:" + msg.toString());
-
-		// TODO: subscribe user to the topic
-		
-		throw new RuntimeException("not yet implemented");
+		 Logger.log("onSubscribe:" + msg.toString());
+        storage.addSubscriber(msg.getUser(), msg.getTopicName());
 		
 	}
 
 	public void onUnsubscribe(UnsubscribeMsg msg) {
-
-		Logger.log("onUnsubscribe:" + msg.toString());
-
-		// TODO: unsubscribe user to the topic
-		
-		throw new RuntimeException("not yet implemented");
+		 Logger.log("onUnsubscribe:" + msg.toString());
+        storage.removeSubscriber(msg.getUser(), msg.getTopicName());
 
 	}
 
 	public void onPublish(PublishMsg msg) {
-
 		Logger.log("onPublish:" + msg.toString());
-
-		// TODO: publish the message to clients subscribed to the topic
-		
-		throw new RuntimeException("not yet implemented");
+		storage.getSubscribers(msg.getTopicName());
 		
 	}
 }
